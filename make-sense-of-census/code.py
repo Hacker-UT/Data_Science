@@ -1,48 +1,99 @@
-# --------------
 # Importing header files
 import numpy as np
-import warnings
-
-warnings.filterwarnings('ignore')
 
 #New record
-new_record=np.array([[50,  9,  4,  1,  0,  0, 40,  0]])
+new_record=[[50,  9,  4,  1,  0,  0, 40,  0]]
 
-#Reading file
-data = np.genfromtxt(path, delimiter=",", skip_header=1)
 #Code starts here
-census=np.concatenate((data,new_record),axis=0)
-age=np.array(census[:,0])
+
+#Loading data file and saving it into a new numpy array 
+data = np.genfromtxt(path, delimiter=",", skip_header=1)
+
+print(data.shape)
+
+#Concatenating the new record to the existing numpy array
+census=np.concatenate((data, new_record),axis = 0)
+
+print(census.shape)
+
+#Subsetting the array to include only 'Age' column
+age=census[:,0]
+
+#Finding the max value of age
 max_age=age.max()
+print("Max Age= ",max_age)
+print(age)
+
+#Find the min value of age
 min_age=age.min()
+print("Min Age= ",min_age)
+
+#Find the mean of age
 age_mean=age.mean()
-age_std=np.std(age)
-race=np.array(census[:,2])
-race_0=race[race==0]
-race_1=race[race==1]
-race_2=race[race==2]
-race_3=race[race==3]
-race_4=race[race==3]
-len_0=race_0.size
-len_1=race_1.size
-len_2=race_2.size
-len_3=race_3.size
-len_4=race_4.size
-len_all=[len_0,len_1,len_2,len_3,len_4]
-min_race=min(len_all)
-minority_race=len_all.index(min_race)
+print("Age Average= ", age_mean)
+
+#Find the standard deviation of age
+age_std=age.std()
+print("Age Standard Deviation= ",age_std)
+
+#Creating new subsets based on 'Age'
+race_0=census[census[:,2]==0]
+race_1=census[census[:,2]==1]
+race_2=census[census[:,2]==2]
+race_3=census[census[:,2]==3]
+race_4=census[census[:,2]==4]
+
+
+#Finding the length of the above created subsets
+len_0=len(race_0)
+len_1=len(race_1)
+len_2=len(race_2)
+len_3=len(race_3)
+len_4=len(race_4)
+
+#Printing the length of the above created subsets
+print('Race_0: ', len_0)
+print('Race_1: ', len_1)
+print('Race_2: ', len_2)
+print('Race_3: ', len_3)
+print('Race_4: ', len_4)
+
+#Storing the different race lengths with appropriate indexes
+race_list=[len_0, len_1,len_2, len_3, len_4]
+
+#Storing the race with minimum length into a variable 
+minority_race=race_list.index(min(race_list))
+
+#Subsetting the array based on the age 
 senior_citizens=census[census[:,0]>60]
-working_hours=np.array(senior_citizens[:,6])
-working_hours_sum=working_hours.sum()
-senior_citizens_len=working_hours.size
+
+#Calculating the sum of all the values of array
+working_hours_sum=senior_citizens.sum(axis=0)[6]
+
+#Finding the length of the array
+senior_citizens_len=len(senior_citizens)
+
+#Finding the average working hours
 avg_working_hours=working_hours_sum/senior_citizens_len
-print(avg_working_hours)
+
+#Printing the average working hours
+print((avg_working_hours))
+
+#Creating an array based on 'education' column
 high=census[census[:,1]>10]
+
+#Finding the average pay
+avg_pay_high=high[:,7].mean()
+
+#Printing the average pay
+print(avg_pay_high)
+
+#Creating an array based on 'education' column
 low=census[census[:,1]<=10]
-inc_h=np.array(high[:,7])
-inc_l=np.array(low[:,7])
-avg_pay_high=inc_h.mean()
-avg_pay_low=inc_l.mean()
 
+#Finding the average pay
+avg_pay_low=low[:,7].mean()
 
-
+#Printing the average pay
+print(avg_pay_low)
+#Code ends here
