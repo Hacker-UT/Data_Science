@@ -10,6 +10,6 @@
 
 ### Approach taken to solve the problem
 
- The concepts of array indexing and slicing and its various vectorization functions should be clear. Masking is another important concept covered hereby.
+ The concepts of array indexing and slicing and its various vectorization functions should be clear. Masking is another important concept covered herewith.
 
 
